@@ -11,50 +11,69 @@
       color: #111827;
       background: #f3f4f6;
     }
-
     body {
       margin: 0;
       padding: 0;
+      background: #f3f4f6;
     }
-
     header {
       background: #111827;
       color: #f9fafb;
       padding: 1.5rem 1rem;
     }
-
     header h1 {
       margin: 0 0 0.5rem 0;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
-
     header p {
       margin: 0.25rem 0;
       font-size: 0.95rem;
     }
-
     header a {
       color: #60a5fa;
       text-decoration: none;
     }
-
     header a:hover {
       text-decoration: underline;
     }
-
     main {
       max-width: 1100px;
       margin: 1.5rem auto 2rem auto;
       padding: 0 1rem;
+    }
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+    .theme-card {
+      background: #ffffff;
+      border-radius: 0.75rem;
+      padding: 0.75rem 0.9rem;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    }
+    .theme-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+    .theme-desc {
+      font-size: 0.85rem;
+      color: #4b5563;
     }
 
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 1rem;
+      margin: 0.3rem 0 1rem 0;
     }
-
     .filters button {
       border: 1px solid #d1d5db;
       padding: 0.4rem 0.8rem;
@@ -63,7 +82,6 @@
       cursor: pointer;
       font-size: 0.85rem;
     }
-
     .filters button.active {
       background: #111827;
       color: #f9fafb;
@@ -75,22 +93,19 @@
       gap: 1rem;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
-
     .card {
       background: #ffffff;
       border-radius: 0.75rem;
       overflow: hidden;
-      box-shadow: 0 8px 16px rgb(15 23 42 / 0.1);
+      box-shadow: 0 8px 16px rgba(15, 23, 42, 0.12);
       display: flex;
       flex-direction: column;
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-
     .card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgb(15 23 42 / 0.15);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
     }
-
     .thumb-wrapper {
       position: relative;
       display: block;
@@ -98,21 +113,18 @@
       aspect-ratio: 16 / 9;
       background: #000;
     }
-
     .thumb-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-
     .card-content {
       padding: 0.8rem 1rem 1rem 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
     }
-
     .tag {
       display: inline-block;
       padding: 0.1rem 0.5rem;
@@ -123,27 +135,22 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-
     .card h3 {
       margin: 0;
       font-size: 1rem;
     }
-
     .meta {
       font-size: 0.8rem;
       color: #6b7280;
     }
-
     details {
       margin-top: 0.3rem;
       font-size: 0.85rem;
     }
-
     summary {
       cursor: pointer;
       color: #2563eb;
     }
-
     footer {
       border-top: 1px solid #e5e7eb;
       margin-top: 2rem;
@@ -151,12 +158,10 @@
       font-size: 0.85rem;
       color: #6b7280;
     }
-
     footer a {
       color: #2563eb;
       text-decoration: none;
     }
-
     footer a:hover {
       text-decoration: underline;
     }
@@ -166,13 +171,13 @@
   <header>
     <h1>#jeminforme#jedécode#jegardelespritcritique</h1>
     <p>
-      Sélection de vidéos shorts autour de l’esprit critique, classées par thématiques.
+      Sélection de vidéos shorts autour de l’esprit critique, classées par grandes thématiques.
     </p>
     <p>
-      Sources : 
+      Sources :
       <a href="https://www.youtube.com/@lespritcritique/shorts" target="_blank" rel="noopener">
         L'Esprit critique
-      </a> 
+      </a>
       &nbsp;|&nbsp;
       <a href="https://www.youtube.com/@inspiremoisitupeux/shorts" target="_blank" rel="noopener">
         Inspire-moi si tu peux
@@ -181,103 +186,123 @@
   </header>
 
   <main>
+    <!-- Thématiques + définitions -->
     <section>
-      <h2>Thématiques</h2>
-      <p style="font-size:0.9rem; color:#4b5563;">
-        Clique sur un thème pour filtrer les vidéos. Clique sur la miniature pour ouvrir la vidéo sur YouTube, ou déroule « Voir le résumé » pour le contenu.
-      </p>
-      <div class="filters" id="filters">
-        <!-- Boutons de filtres générés en JS -->
+      <h2>Les 4 grandes thématiques</h2>
+      <div class="themes-grid">
+        <div class="theme-card">
+          <div class="theme-title">Biais cognitifs & illusions mentales</div>
+          <div class="theme-desc">
+            Comment notre cerveau nous trompe sans qu’on s’en rende compte&nbsp;: raccourcis mentaux, erreurs de jugement et illusions qui déforment la réalité.
+          </div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-title">Sophismes & arguments fallacieux</div>
+          <div class="theme-desc">
+            Les « mauvais » arguments qui ont l’air convaincants mais reposent sur des erreurs logiques, des détours rhétoriques ou des raisonnements trompeurs.
+          </div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-title">Manipulations politiques & médiatiques</div>
+          <div class="theme-desc">
+            Les stratégies utilisées dans le débat public et les médias pour cadrer l’information, influencer l’opinion et fabriquer des récits collectifs.
+          </div>
+        </div>
+        <div class="theme-card">
+          <div class="theme-title">Psychologie, émotions & relations</div>
+          <div class="theme-desc">
+            La manière dont émotions, honte, respect, identité ou victimisation sont mobilisées dans nos échanges pour peser sur les autres et sur les débats.
+          </div>
+        </div>
       </div>
+
+      <p style="font-size:0.9rem; color:#4b5563;">
+        Utilise les filtres ci-dessous pour afficher les vidéos par thématique. Clique sur la miniature pour ouvrir la vidéo sur YouTube, ou sur «&nbsp;Voir le résumé&nbsp;» pour une courte description.
+      </p>
+      <div class="filters" id="filters"></div>
     </section>
 
+    <!-- Grille des vidéos -->
     <section>
-      <div class="grid" id="video-grid">
-        <!-- Cartes vidéos générées en JS -->
-      </div>
+      <div class="grid" id="video-grid"></div>
     </section>
 
     <footer>
       <p>
-        Page réalisée à partir des contenus des chaînes 
+        Page réalisée à partir des contenus des chaînes
         <a href="https://www.youtube.com/@lespritcritique/shorts" target="_blank" rel="noopener">
           L'Esprit critique
-        </a> 
-        et 
+        </a>
+        et
         <a href="https://www.youtube.com/@inspiremoisitupeux/shorts" target="_blank" rel="noopener">
           Inspire-moi si tu peux
-        </a>.  
-        Les droits des vidéos et miniatures restent à leurs auteurs respectifs.
+        </a>. Les droits des vidéos et miniatures restent à leurs auteurs respectifs.
       </p>
     </footer>
   </main>
 
   <script>
     /**
-     * LISTE DES VIDÉOS
-     * ----------------
-     * Tu peux ajouter / modifier des vidéos ici.
-     * - id : l'identifiant YouTube (après /shorts/ dans l’URL)
-     * - channel : "lespritcritique" ou "inspiremoisitupeux"
-     * - theme : la thématique (tu peux créer tes propres catégories)
-     * - summary : ton résumé de la vidéo
+     * MODE D’EMPLOI POUR AJOUTER TES VIDÉOS
+     * -------------------------------------
+     * Pour chaque Short que tu choisis sur une des deux chaînes :
+     *
+     * 1. Copier l’URL, par ex. :
+     *    https://www.youtube.com/shorts/ABCDE123456
+     * 2. L’ID est la partie après /shorts/  ->  "ABCDE123456"
+     * 3. Ajouter un objet ci-dessous dans `videos` :
+     *
+     * {
+     *   id: "ABCDE123456",
+     *   title: "Titre que tu veux afficher",
+     *   channelLabel: "L'Esprit critique", // ou "Inspire-moi si tu peux"
+     *   theme: "Biais cognitifs & illusions mentales", // UNE des 4 catégories
+     *   tags: ["biais d’ancrage", "biais de négativité"],
+     *   summary: "Petit résumé de la vidéo en quelques phrases."
+     * },
+     *
+     * Tu peux classer les vidéos à partir de la longue liste de notions
+     * (foutage de gueule, argument d’autorité, biais de disponibilité, etc.).
      */
+
     const videos = [
+      // 👉 AJOUTE TES VIDÉOS ICI, SUR LE MODÈLE CI-DESSOUS.
+
+      /*
       {
-        id: "1KlQV36CRmk",
-        title: "La réponse à Bruno Retailleau (exemple)",
-        channel: "inspiremoisitupeux",
-        channelLabel: "Inspire-moi si tu peux",
-        theme: "Politique & débat public",
-        summary: "Réponse rapide à une prise de position politique, en expliquant les enjeux et en invitant à prendre du recul plutôt que réagir à chaud."
-      },
-      {
-        id: "eHTV5eyVkhM",
-        title: "Immigration & intégration (partie 2 – exemple)",
-        channel: "inspiremoisitupeux",
-        channelLabel: "Inspire-moi si tu peux",
-        theme: "Société & migrations",
-        summary: "Témoignage autour de l’immigration et de l’intégration, avec un focus sur les représentations, les stéréotypes et la réalité vécue."
-      },
-      {
-        id: "-TOIxu6sX5E",
-        title: "Réponse de L'Esprit critique (exemple)",
-        channel: "lespritcritique",
+        id: "ABCDE123456",
+        title: "Exemple de Short sur le biais d’ancrage",
         channelLabel: "L'Esprit critique",
-        theme: "Esprit critique & zététique",
-        summary: "Discussion sur la manière d’exercer l’esprit critique, sur la qualité des sources et sur la façon de répondre à une critique sans tomber dans l’attaque personnelle."
+        theme: "Biais cognitifs & illusions mentales",
+        tags: ["biais d’ancrage", "biais de disponibilité"],
+        summary: "La vidéo montre comment la première information reçue influence toutes les suivantes, même si elle est fausse."
       },
       {
-        id: "ksqHHxs1STI",
-        title: "Comprendre les abus (exemple)",
-        channel: "inspiremoisitupeux",
+        id: "FGHIJ789012",
+        title: "Exemple de Short sur le faux dilemme",
         channelLabel: "Inspire-moi si tu peux",
-        theme: "Psychologie & relations",
-        summary: "Courte capsule sur les mécanismes des abus, comment les repérer et pourquoi l’information est une forme de protection."
-      },
-      {
-        id: "1RGgmfgqt5Y",
-        title: "Le vocabulaire (exemple)",
-        channel: "lespritcritique",
-        channelLabel: "L'Esprit critique",
-        theme: "Esprit critique & zététique",
-        summary: "Utiliser les termes d'extrême-droite ou d'extrême gauche avec parcimonie."
-      },
-      
-      // 👉 Ajoute ici d’autres objets sur le même modèle
+        theme: "Sophismes & arguments fallacieux",
+        tags: ["faux dilemme", "argumentation"],
+        summary: "On illustre comment certaines personnes réduisent un problème complexe à deux options extrêmes pour forcer un choix."
+      }
+      */
     ];
 
-    // Générer la liste des thèmes uniques
-    const themes = ["Tous", ...new Set(videos.map(v => v.theme))];
+    const THEMES = [
+      "Tous",
+      "Biais cognitifs & illusions mentales",
+      "Sophismes & arguments fallacieux",
+      "Manipulations politiques & médiatiques",
+      "Psychologie, émotions & relations"
+    ];
 
     const filtersContainer = document.getElementById("filters");
     const grid = document.getElementById("video-grid");
-
     let currentTheme = "Tous";
 
     function createFilters() {
       filtersContainer.innerHTML = "";
-      themes.forEach(theme => {
+      THEMES.forEach(theme => {
         const button = document.createElement("button");
         button.textContent = theme;
         if (theme === currentTheme) button.classList.add("active");
@@ -308,22 +333,34 @@
         ? videos
         : videos.filter(v => v.theme === currentTheme);
 
+      if (filtered.length === 0) {
+        const msg = document.createElement("p");
+        msg.style.fontSize = "0.9rem";
+        msg.style.color = "#6b7280";
+        msg.textContent =
+          "Aucune vidéo encore ajoutée pour cette thématique. Ajoute des entrées dans le tableau « videos » dans le code pour les faire apparaître ici.";
+        grid.appendChild(msg);
+        return;
+      }
+
       filtered.forEach(video => {
         const card = document.createElement("article");
         card.className = "card";
 
-        const link = document.createElement("a");
-        link.className = "thumb-wrapper";
-        link.href = `https://www.youtube.com/shorts/${video.id}`;
-        link.target = "_blank";
-        link.rel = "noopener";
+        if (video.id) {
+          const link = document.createElement("a");
+          link.className = "thumb-wrapper";
+          link.href = `https://www.youtube.com/shorts/${video.id}`;
+          link.target = "_blank";
+          link.rel = "noopener";
 
-        const img = document.createElement("img");
-        img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
-        img.alt = video.title;
+          const img = document.createElement("img");
+          img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
+          img.alt = video.title;
 
-        link.appendChild(img);
-        card.appendChild(link);
+          link.appendChild(img);
+          card.appendChild(link);
+        }
 
         const content = document.createElement("div");
         content.className = "card-content";
@@ -334,30 +371,38 @@
         content.appendChild(tag);
 
         const title = document.createElement("h3");
-        title.textContent = video.title;
+        title.textContent = video.title || "Vidéo sans titre";
         content.appendChild(title);
 
         const meta = document.createElement("p");
         meta.className = "meta";
-        meta.textContent = `Chaîne : ${video.channelLabel}`;
+        meta.textContent = `Chaîne : ${video.channelLabel || "Non précisée"}`;
         content.appendChild(meta);
 
-        const details = document.createElement("details");
-        const summary = document.createElement("summary");
-        summary.textContent = "Voir le résumé";
-        const p = document.createElement("p");
-        p.textContent = video.summary;
+        if (video.tags && video.tags.length > 0) {
+          const tagsLine = document.createElement("p");
+          tagsLine.className = "meta";
+          tagsLine.textContent = "Notions : " + video.tags.join(", ");
+          content.appendChild(tagsLine);
+        }
 
-        details.appendChild(summary);
-        details.appendChild(p);
-        content.appendChild(details);
+        if (video.summary) {
+          const details = document.createElement("details");
+          const summary = document.createElement("summary");
+          summary.textContent = "Voir le résumé";
+          const p = document.createElement("p");
+          p.textContent = video.summary;
+
+          details.appendChild(summary);
+          details.appendChild(p);
+          content.appendChild(details);
+        }
 
         card.appendChild(content);
         grid.appendChild(card);
       });
     }
 
-    // Initialisation
     createFilters();
     renderVideos();
   </script>
