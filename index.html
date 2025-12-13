@@ -46,6 +46,7 @@
       margin-bottom: 0.5rem;
     }
 
+    /* Cartes de thématiques */
     .themes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -68,6 +69,7 @@
       color: #4b5563;
     }
 
+    /* Filtres */
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -88,6 +90,7 @@
       border-color: #111827;
     }
 
+    /* Grille de vidéos */
     .grid {
       display: grid;
       gap: 1rem;
@@ -174,10 +177,10 @@
       Sélection de vidéos shorts autour de l’esprit critique, classées par grandes thématiques.
     </p>
     <p>
-      Sources :
+      Sources : 
       <a href="https://www.youtube.com/@lespritcritique/shorts" target="_blank" rel="noopener">
         L'Esprit critique
-      </a>
+      </a> 
       &nbsp;|&nbsp;
       <a href="https://www.youtube.com/@inspiremoisitupeux/shorts" target="_blank" rel="noopener">
         Inspire-moi si tu peux
@@ -199,7 +202,7 @@
         <div class="theme-card">
           <div class="theme-title">Sophismes & arguments fallacieux</div>
           <div class="theme-desc">
-            Les « mauvais » arguments qui ont l’air convaincants mais reposent sur des erreurs logiques, des détours rhétoriques ou des raisonnements trompeurs.
+            Les “mauvais” arguments qui ont l’air convaincants mais reposent sur des erreurs logiques, des détours rhétoriques ou des raisonnements trompeurs.
           </div>
         </div>
         <div class="theme-card">
@@ -215,7 +218,6 @@
           </div>
         </div>
       </div>
-
       <p style="font-size:0.9rem; color:#4b5563;">
         Utilise les filtres ci-dessous pour afficher les vidéos par thématique. Clique sur la miniature pour ouvrir la vidéo sur YouTube, ou sur «&nbsp;Voir le résumé&nbsp;» pour une courte description.
       </p>
@@ -229,87 +231,63 @@
 
     <footer>
       <p>
-        Page réalisée à partir des contenus des chaînes
+        Page réalisée à partir des contenus des chaînes 
         <a href="https://www.youtube.com/@lespritcritique/shorts" target="_blank" rel="noopener">
           L'Esprit critique
-        </a>
-        et
+        </a> 
+        et 
         <a href="https://www.youtube.com/@inspiremoisitupeux/shorts" target="_blank" rel="noopener">
           Inspire-moi si tu peux
-        </a>. Les droits des vidéos et miniatures restent à leurs auteurs respectifs.
+        </a>.  
+        Les droits des vidéos et miniatures restent à leurs auteurs respectifs.
       </p>
     </footer>
   </main>
 
   <script>
     /**
-     * MODE D’EMPLOI POUR AJOUTER TES VIDÉOS
-     * -------------------------------------
-     * Pour chaque Short que tu choisis sur une des deux chaînes :
+     * IMPORTANT :
+     * ===========
+     * Je ne peux pas récupérer automatiquement la liste des Shorts depuis YouTube.
+     * Tu dois donc ajouter ici MANUELLEMENT les vidéos que tu retiens.
      *
-     * 1. Copier l’URL, par ex. :
-     *    https://www.youtube.com/shorts/ABCDE123456
-     * 2. L’ID est la partie après /shorts/  ->  "ABCDE123456"
-     * 3. Ajouter un objet ci-dessous dans `videos` :
+     * MODE D’EMPLOI :
+     * 1. Va sur une vidéo Short, par ex. :
+     *    https://www.youtube.com/shorts/XXXXXXXXXXX
+     * 2. Récupère l’ID après /shorts/ (XXXXXXXXXXX).
+     * 3. Ajoute un objet comme ci-dessous dans le tableau `videos`.
      *
-     * {
-     *   id: "ABCDE123456",
-     *   title: "Titre que tu veux afficher",
-     *   channelLabel: "L'Esprit critique", // ou "Inspire-moi si tu peux"
-     *   theme: "Biais cognitifs & illusions mentales", // UNE des 4 catégories
-     *   tags: ["biais d’ancrage", "biais de négativité"],
-     *   summary: "Petit résumé de la vidéo en quelques phrases."
-     * },
-     *
-     * Tu peux classer les vidéos à partir de la longue liste de notions
-     * (foutage de gueule, argument d’autorité, biais de disponibilité, etc.).
+     * Champs :
+     * - id : l’ID YouTube du short (obligatoire)
+     * - title : titre court que tu veux afficher
+     * - channelLabel : "L'Esprit critique" ou "Inspire-moi si tu peux"
+     * - theme : UNE des 4 valeurs suivantes :
+     *      "Biais cognitifs & illusions mentales"
+     *      "Sophismes & arguments fallacieux"
+     *      "Manipulations politiques & médiatiques"
+     *      "Psychologie, émotions & relations"
+     * - tags : liste des notions abordées (biais, concepts…)
+     * - summary : résumé en 2–3 phrases
      */
-
     const videos = [
-      // const videos = [
-  {
-    id: "1KlQV36CRmk",
-    title: "Le biais d’ancrage expliqué",
-    channelLabel: "L'Esprit critique",
-    theme: "Biais cognitifs & illusions mentales",
-    tags: ["biais d’ancrage"],
-    summary: "La vidéo montre comment la première info que l’on reçoit influence tout le reste."
-  },
-  {
-    id: "eHTV5eyVkhM",
-    title: "Le faux dilemme en politique",
-    channelLabel: "Inspire-moi si tu peux",
-    theme: "Sophismes & arguments fallacieux",
-    tags: ["faux dilemme", "argumentation"],
-    summary: "On voit comment on réduit artificiellement un débat complexe à deux options extrêmes."
-  },
-  {
-    id: "ksqHHxs1STI",
-    title: "Foutage de gueule et mépris",
-    channelLabel: "Inspire-moi si tu peux",
-    theme: "Psychologie, émotions & relations",
-    tags: ["foutage de gueule", "mépris"],
-    summary: "Exemple d’attitude méprisante qui coupe court à tout débat serein."
-  }
-];
-
-
       /*
+      Exemple de vidéo (à adapter avec de vraies vidéos) :
+
       {
-        id: "ABCDE123456",
-        title: "Exemple de Short sur le biais d’ancrage",
+        id: "XXXXXXXXXXX",
+        title: "Titre de la vidéo",
         channelLabel: "L'Esprit critique",
         theme: "Biais cognitifs & illusions mentales",
         tags: ["biais d’ancrage", "biais de disponibilité"],
-        summary: "La vidéo montre comment la première information reçue influence toutes les suivantes, même si elle est fausse."
+        summary: "Résumé de la vidéo en quelques phrases : ce qui est expliqué, sur quoi on attire l’attention, et ce que ça dit sur l’esprit critique."
       },
       {
-        id: "FGHIJ789012",
-        title: "Exemple de Short sur le faux dilemme",
+        id: "YYYYYYYYYYY",
+        title: "Autre vidéo",
         channelLabel: "Inspire-moi si tu peux",
-        theme: "Sophismes & arguments fallacieux",
-        tags: ["faux dilemme", "argumentation"],
-        summary: "On illustre comment certaines personnes réduisent un problème complexe à deux options extrêmes pour forcer un choix."
+        theme: "Manipulations politiques & médiatiques",
+        tags: ["populisme économique", "fenêtre d’Overton"],
+        summary: "Résumé de la capsule, avec la manière dont les concepts sont illustrés."
       }
       */
     ];
@@ -363,8 +341,7 @@
         const msg = document.createElement("p");
         msg.style.fontSize = "0.9rem";
         msg.style.color = "#6b7280";
-        msg.textContent =
-          "Aucune vidéo encore ajoutée pour cette thématique. Ajoute des entrées dans le tableau « videos » dans le code pour les faire apparaître ici.";
+        msg.textContent = "Aucune vidéo encore ajoutée pour cette thématique. Ajoute des entrées dans le tableau 'videos' dans le code pour les faire apparaître ici.";
         grid.appendChild(msg);
         return;
       }
@@ -373,20 +350,18 @@
         const card = document.createElement("article");
         card.className = "card";
 
-        if (video.id) {
-          const link = document.createElement("a");
-          link.className = "thumb-wrapper";
-          link.href = `https://www.youtube.com/shorts/${video.id}`;
-          link.target = "_blank";
-          link.rel = "noopener";
+        const link = document.createElement("a");
+        link.className = "thumb-wrapper";
+        link.href = `https://www.youtube.com/shorts/${video.id}`;
+        link.target = "_blank";
+        link.rel = "noopener";
 
-          const img = document.createElement("img");
-          img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
-          img.alt = video.title;
+        const img = document.createElement("img");
+        img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
+        img.alt = video.title;
 
-          link.appendChild(img);
-          card.appendChild(link);
-        }
+        link.appendChild(img);
+        card.appendChild(link);
 
         const content = document.createElement("div");
         content.className = "card-content";
@@ -397,12 +372,12 @@
         content.appendChild(tag);
 
         const title = document.createElement("h3");
-        title.textContent = video.title || "Vidéo sans titre";
+        title.textContent = video.title;
         content.appendChild(title);
 
         const meta = document.createElement("p");
         meta.className = "meta";
-        meta.textContent = `Chaîne : ${video.channelLabel || "Non précisée"}`;
+        meta.textContent = `Chaîne : ${video.channelLabel}`;
         content.appendChild(meta);
 
         if (video.tags && video.tags.length > 0) {
@@ -429,6 +404,7 @@
       });
     }
 
+    // Initialisation
     createFilters();
     renderVideos();
   </script>
