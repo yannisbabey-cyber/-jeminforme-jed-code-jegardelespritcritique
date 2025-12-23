@@ -5,62 +5,179 @@
   <title>#jeminforme#jedécode#jegardelespritcritique</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    :root{
+      --bg:#f3f4f6;
+      --header:#111827;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+
+      /* Pastels (bordures “vignettes”) */
+      --c-biais:#bfe3ff;        /* bleu pastel */
+      --c-sophismes:#ffe2a8;    /* jaune pastel */
+      --c-manips:#ffc2c2;       /* rouge pastel */
+      --c-psy:#c7f2d1;          /* vert pastel */
+
+      --highlight:#fff2a8;      /* surlignage */
+      --ring: rgba(17,24,39,0.12);
+    }
+
     body {
       font-family: system-ui, sans-serif;
-      background: #f3f4f6;
+      background: var(--bg);
+      color: var(--text);
       margin: 0;
       padding: 0;
     }
+
     header {
-      background: #111827;
+      background: var(--header);
       color: white;
-      padding: 1.5rem;
+      padding: 1.25rem 1rem;
     }
+
+    header h1{
+      margin: 0 0 0.5rem 0;
+      font-size: 1.15rem;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    header p{ margin: 0.25rem 0; }
+
+    header a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    header a:hover { text-decoration: underline; }
+
     main {
       max-width: 1100px;
       margin: auto;
       padding: 1rem;
     }
-    .filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+    /* Recherche */
+    .search-wrap{
+      display:flex;
+      gap:0.5rem;
+      align-items:center;
+      margin: 0.75rem 0 1rem 0;
+      flex-wrap: wrap;
+    }
+    .search-wrap input[type="search"]{
+      flex: 1 1 320px;
+      padding: 0.65rem 0.8rem;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      background: white;
+      font-size: 1rem;
+      outline: none;
+    }
+    .search-wrap input[type="search"]:focus{
+      box-shadow: 0 0 0 4px var(--ring);
+    }
+    .search-wrap button{
+      padding: 0.65rem 0.8rem;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      background: white;
+      cursor:pointer;
+      font-size: 0.95rem;
+    }
+    .search-wrap .hint{
+      font-size: 0.9rem;
+      color: var(--muted);
+      flex: 1 1 100%;
+    }
+
+    /* Filtres */
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0.75rem 0 1rem 0;
+    }
     .filters button {
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      border: 1px solid #ccc;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
       background: white;
       cursor: pointer;
+      font-size: 0.9rem;
     }
-    .filters button.active { background: #111827; color: white; }
+    .filters button.active {
+      background: #111827;
+      color: white;
+      border-color: #111827;
+    }
+
+    /* Grille / cartes */
     .grid {
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
+
     .card {
-      background: white;
-      border-radius: 10px;
+      background: var(--card);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+      border: 3px solid transparent; /* couleur appliquée par catégorie */
     }
+
+    .thumb-wrapper { display:block; }
     .thumb-wrapper img { width: 100%; display: block; }
-    .card-content { padding: 0.8rem 1rem; }
+
+    .card-content { padding: 0.85rem 1rem 1rem 1rem; }
+
+    /* Tag catégorie coloré */
     .tag {
       display: inline-block;
-      padding: 0.1rem 0.5rem;
-      background: #e5e7eb;
-      border-radius: 10px;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
       font-size: 12px;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+      border: 1px solid rgba(17,24,39,0.12);
+      background: rgba(229,231,235,0.7);
     }
-    
-  </style>
-  header a {
-  color: #60a5fa;
-  text-decoration: none;
-}
 
-header a:hover {
-  text-decoration: underline;
-}
+    .meta{
+      margin: 0.2rem 0 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* surlignage */
+    mark.hl{
+      background: var(--highlight);
+      padding: 0 0.15em;
+      border-radius: 0.25em;
+    }
+
+    /* Bordures pastel par catégorie (vignettes) */
+    .theme-biais { border-color: var(--c-biais); }
+    .theme-sophismes { border-color: var(--c-sophismes); }
+    .theme-manips { border-color: var(--c-manips); }
+    .theme-psy { border-color: var(--c-psy); }
+
+    /* Tag lui-même en pastel */
+    .tag.theme-biais { background: rgba(191,227,255,0.55); }
+    .tag.theme-sophismes { background: rgba(255,226,168,0.55); }
+    .tag.theme-manips { background: rgba(255,194,194,0.55); }
+    .tag.theme-psy { background: rgba(199,242,209,0.60); }
+
+    /* Mobile (optimisation) */
+    @media (max-width: 520px){
+      main{ padding: 0.85rem; }
+      header{ padding: 1.1rem 0.85rem; }
+      .grid{ grid-template-columns: 1fr; }
+      .filters button{ font-size: 0.85rem; padding: 0.4rem 0.75rem; }
+      .search-wrap input[type="search"]{ flex-basis: 100%; }
+      .search-wrap button{ width: 100%; }
+      ul{ padding-left: 1.1rem; }
+    }
+  </style>
 </head>
 
 <body>
@@ -68,19 +185,21 @@ header a:hover {
   <h1>#jeminforme#jedécode#jegardelespritcritique</h1>
   <p>Classification des vidéos par grandes thématiques d’esprit critique.</p>
   <p>
-    
     Sources :
-    <a href="https://www.youtube.com/@lespritcritique/shorts" target="_blank">
-      L'Esprit critique
-    </a>
+    <a href="https://www.youtube.com/@lespritcritique/shorts" target="_blank" rel="noopener">L'Esprit critique</a>
     &nbsp;|&nbsp;
-    <a href="https://www.youtube.com/@inspiremoisitupeux/shorts" target="_blank">
-      Inspire-moi si tu peux
-    </a>
+    <a href="https://www.youtube.com/@inspiremoisitupeux/shorts" target="_blank" rel="noopener">Inspire-moi si tu peux</a>
   </p>
 </header>
 
 <main>
+
+  <!-- 🔍 Recherche -->
+  <div class="search-wrap">
+    <input id="searchInput" type="search" placeholder="Rechercher par mot-clé (ex. biais, populisme, nuance…)" autocomplete="off">
+    <button id="clearSearch" type="button">Effacer</button>
+    <div class="hint" id="resultsHint"></div>
+  </div>
 
   <h2>Catégories</h2>
   <ul>
@@ -97,7 +216,6 @@ header a:hover {
 
 <script>
 const videos = [
-
   {
     id: "4IeqOdrHzuQ",
     title: "Le biais d’ancrage",
@@ -106,8 +224,7 @@ const videos = [
     tags: ["biais d’ancrage"],
     summary: "Tendance à se laisser influencer par la première information reçue."
   },
-  
- {
+  {
     id: "Wcu3FzMHkQ8",
     title: "Le biais de disponibilité",
     channelLabel: "Inspire-moi si tu peux",
@@ -115,8 +232,7 @@ const videos = [
     tags: ["biais de disponibilité"],
     summary: "On juge une situation selon les exemples les plus faciles à se rappeler."
   },
-  
-   {
+  {
     id: "NXSAyq_MBsc",
     title: "Le biais de représentativité",
     channelLabel: "Inspire-moi si tu peux",
@@ -124,8 +240,7 @@ const videos = [
     tags: ["biais de représentativité"],
     summary: "On généralise à partir d’un cas qui “ressemble” sans preuve réelle."
   },
-  
-   {
+  {
     id: "MS5aVWMHLYo",
     title: "Le biais d’agentivité",
     channelLabel: "Inspire-moi si tu peux",
@@ -133,7 +248,6 @@ const videos = [
     tags: ["biais d’agentivité"],
     summary: "On attribue un acteur ou une intention là où il n’y en a pas."
   },
-  
   {
     id: "M9Ho-80_GeQ",
     title: "Le biais de catégorisation",
@@ -142,7 +256,6 @@ const videos = [
     tags: ["biais de catégorisation"],
     summary: "On range trop vite les gens ou les choses dans des cases simplificatrices."
   },
-  
   {
     id: "cEgc7V6A-a8",
     title: "Le biais de négativité (1)",
@@ -151,7 +264,6 @@ const videos = [
     tags: ["biais de négativité"],
     summary: "On accorde plus de poids aux aspects négatifs qu’aux positifs."
   },
-  
   {
     id: "s3_SVfVkNnI",
     title: "Le biais de négativité (2)",
@@ -160,7 +272,6 @@ const videos = [
     tags: ["biais de négativité"],
     summary: "On accorde plus de poids aux aspects négatifs qu’aux positifs."
   },
-  
   {
     id: "TTryNzJZdtk",
     title: "L'effet de cadrage",
@@ -169,7 +280,6 @@ const videos = [
     tags: ["effet de cadrage"],
     summary: "La manière de présenter une information change la décision qu’on prend."
   },
-  
   {
     id: "b6FxI2B70HM",
     title: "L'effet Dunning-Kruger",
@@ -178,7 +288,6 @@ const videos = [
     tags: ["effet Dunning-Kruger"],
     summary: "Les moins compétents surestiment leurs capacités, les experts les sous-estiment."
   },
-  
   {
     id: "NslyUeWypfs",
     title: "L'effet de vérité illusoire",
@@ -187,7 +296,6 @@ const videos = [
     tags: ["effet de vérité illusoire"],
     summary: "Une info répétée souvent finit par sembler vraie."
   },
-  
   {
     id: "Xzy4aCCN9Ic",
     title: "L'effet de troupeau",
@@ -196,7 +304,6 @@ const videos = [
     tags: ["effet de troupeau"],
     summary: "On suit le groupe pour ne pas être isolé."
   },
-  
   {
     id: "fwfPfaiBLBo",
     title: "La négligence du taux de base",
@@ -205,7 +312,6 @@ const videos = [
     tags: ["négligence du taux de base"],
     summary: "On ignore les statistiques générales au profit d’un cas particulier."
   },
-  
   {
     id: "cDxvmXGAPzM",
     title: "Le brain rot",
@@ -214,7 +320,6 @@ const videos = [
     tags: ["brain rot"],
     summary: "Dégradation de l’esprit critique provoquée par la consommation répétée de contenus toxiques."
   },
-  
   {
     id: "bfe0FgmbP3w",
     title: "L'opinion avant l'info",
@@ -223,7 +328,6 @@ const videos = [
     tags: ["opinion avant l'info"],
     summary: "On se forge une opinion avant d’avoir les faits."
   },
-  
   {
     id: "C8iNl31Kjow",
     title: "Ne jamais dire jamais",
@@ -232,7 +336,6 @@ const videos = [
     tags: ["jamais dire jamais"],
     summary: "Rigidité mentale qui empêche de nuancer ou de réévaluer une position."
   },
-  
   {
     id: "wdLyAE_xVII",
     title: "L'effet de halo",
@@ -241,8 +344,7 @@ const videos = [
     tags: ["effet de halo"],
     summary: "Une caractéristique positive ou négative contamine notre jugement global."
   },
-  
-   {
+  {
     id: "SsgAycmog58",
     title: "Le simplissisme",
     channelLabel: "L'Esprit critique",
@@ -250,8 +352,8 @@ const videos = [
     tags: ["simplissisme"],
     summary: "Réduire un problème complexe à une explication ultra-simple."
   },
-  
-   {
+
+  {
     id: "AlJsa-z2d40",
     title: "L'argument d’autorité (1/2)",
     channelLabel: "L'Esprit critique",
@@ -259,7 +361,6 @@ const videos = [
     tags: ["argument d’autorité"],
     summary: "On déclare une opinion vraie parce qu’elle vient d’une figure reconnue."
   },
-  
   {
     id: "7CrAJY5loTA",
     title: "L'argument d’autorité (2/2)",
@@ -268,7 +369,6 @@ const videos = [
     tags: ["argument d’autorité"],
     summary: "On déclare une opinion vraie parce qu’elle vient d’une figure reconnue."
   },
-  
   {
     id: "EUVvJjt0Hfg",
     title: "Le faux dilemme en politique (partie 1/2)",
@@ -277,8 +377,7 @@ const videos = [
     tags: ["faux dilemme"],
     summary: "Un problème complexe est réduit artificiellement à deux choix extrêmes."
   },
-  
-{
+  {
     id: "8rCG4ZGcN9w",
     title: "Le faux dilemme en politique (partie 2/2)",
     channelLabel: "L'Esprit critique",
@@ -286,7 +385,6 @@ const videos = [
     tags: ["faux dilemme"],
     summary: "Un problème complexe est réduit artificiellement à deux choix extrêmes."
   },
-  
   {
     id: "JjoU8E3t5Gw",
     title: "La fausse analogie",
@@ -295,8 +393,7 @@ const videos = [
     tags: ["fausse analogie"],
     summary: "Comparer deux choses qui ne sont pas réellement comparables."
   },
-  
-   {
+  {
     id: "mX0HIEm66-I",
     title: "La fausse dichotomie",
     channelLabel: "Inspire-moi si tu peux",
@@ -304,43 +401,38 @@ const videos = [
     tags: ["fausse dichotomie"],
     summary: "Séparer artificiellement deux idées qui ne sont pas opposées."
   },
-  
   {
     id: "pOlGX8eb5K4",
-    title: "La 3ᵉ variable 1/3)",
+    title: "La 3ᵉ variable (1/3)",
     channelLabel: "L'Esprit critique",
     theme: "Biais cognitifs & illusions mentales",
     tags: ["3ᵉ variable"],
     summary: "Deux choses peuvent sembler liées alors qu’une troisième explique tout."
   },
-  
   {
     id: "A68DAn4twSg",
-    title: "La 3ᵉ variable 2/3)",
+    title: "La 3ᵉ variable (2/3)",
     channelLabel: "L'Esprit critique",
     theme: "Biais cognitifs & illusions mentales",
     tags: ["3ᵉ variable"],
     summary: "Deux choses peuvent sembler liées alors qu’une troisième explique tout."
   },
-  
   {
     id: "Y4NAsKR6bRQ",
-    title: "La 3ᵉ variable 3/3)",
+    title: "La 3ᵉ variable (3/3)",
     channelLabel: "L'Esprit critique",
     theme: "Biais cognitifs & illusions mentales",
     tags: ["3ᵉ variable"],
     summary: "Deux choses peuvent sembler liées alors qu’une troisième explique tout."
   },
-  
-    {
+  {
     id: "94i6NZn93DI",
-    title: "argumentum ad populum",
+    title: "Argumentum ad populum",
     channelLabel: "Inspire-moi si tu peux",
     theme: "Sophismes & arguments fallacieux",
     tags: ["argumentum ad populum"],
     summary: "On dit qu’une idée est vraie parce que “tout le monde le pense”."
   },
-  
   {
     id: "byWxSLTYiA0",
     title: "Le sophisme de l’épouvantail",
@@ -349,7 +441,6 @@ const videos = [
     tags: ["sophisme de l’épouvantail"],
     summary: "Déformer l’argument de l’autre pour l’attaquer plus facilement."
   },
-  
   {
     id: "IqRykRN9lxw",
     title: "La corrélation fallacieuse",
@@ -358,7 +449,6 @@ const videos = [
     tags: ["corrélation fallacieuse"],
     summary: "Fabriquer de toutes pièces une causalité ou un problème."
   },
-  
   {
     id: "Y8IH7TvvXEc",
     title: "L'argument de clôture",
@@ -367,7 +457,6 @@ const videos = [
     tags: ["argument de clôture"],
     summary: "Technique pour empêcher toute contradiction (“on ne peut pas discuter avec toi”)."
   },
-  
   {
     id: "hU5oMZwc_rc",
     title: "La communication implicite",
@@ -376,7 +465,6 @@ const videos = [
     tags: ["communication implicite"],
     summary: "Dire sans dire pour pouvoir nier ensuite."
   },
-  
   {
     id: "E-nqMyvAGjo",
     title: "L'inversion accusatoire",
@@ -385,8 +473,7 @@ const videos = [
     tags: ["inversion accusatoire"],
     summary: "Accuser l’autre de ce qu’on fait soi-même."
   },
-  
-   {
+  {
     id: "pfkzWVInF3s",
     title: "Victim blaming",
     channelLabel: "Inspire-moi si tu peux",
@@ -394,8 +481,7 @@ const videos = [
     tags: ["victim blaming"],
     summary: "Faire porter la responsabilité d’un tort à la personne qui le subit."
   },
-  
-   {
+  {
     id: "MwBRhluXZl0",
     title: "Le oui mais...",
     channelLabel: "Inspire-moi si tu peux",
@@ -403,7 +489,6 @@ const videos = [
     tags: ["oui mais"],
     summary: "Forme polie pour invalider sans argumenter réellement."
   },
-  
   {
     id: "QcCE4DpjyqI",
     title: "La nuance",
@@ -412,16 +497,14 @@ const videos = [
     tags: ["nuance"],
     summary: "Capacité à complexifier un raisonnement et éviter les conclusions hâtives."
   },
-  
   {
     id: "z4BkCDA0V7w",
     title: "Faire diversion",
     channelLabel: "L'Esprit critique",
     theme: "Sophismes & arguments fallacieux",
-    tags: ["Faire diversion"],
+    tags: ["faire diversion"],
     summary: "Dévier le sujet pour éviter le fond du débat."
   },
-  
   {
     id: "ZiZEtMjEvPY",
     title: "Loi de Brandolini",
@@ -430,7 +513,6 @@ const videos = [
     tags: ["loi de Brandolini"],
     summary: "Il faut beaucoup plus d’énergie pour démonter une ineptie que pour la produire."
   },
-  
   {
     id: "rhUCrNIOq7M",
     title: "L'analogie foireuse (1/3)",
@@ -439,7 +521,6 @@ const videos = [
     tags: ["analogie foireuse"],
     summary: "Comparaison approximative qui sert à manipuler l’opinion."
   },
-  
   {
     id: "W9gSvixiuSw",
     title: "L'analogie foireuse (2/3)",
@@ -448,7 +529,6 @@ const videos = [
     tags: ["analogie foireuse"],
     summary: "Comparaison approximative qui sert à manipuler l’opinion."
   },
-  
   {
     id: "rhUCrNIOq7M",
     title: "L'analogie foireuse (3/3)",
@@ -457,26 +537,24 @@ const videos = [
     tags: ["analogie foireuse"],
     summary: "Comparaison approximative qui sert à manipuler l’opinion."
   },
-  
   {
     id: "C0CR1FG3OUk",
-    title: "Lien de cause à effet douteux(1/2)",
+    title: "Lien de cause à effet douteux (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Sophismes & arguments fallacieux",
-    tags: ["Lien de cause à effet douteux"],
+    tags: ["lien de cause à effet douteux"],
     summary: "Déduire un lien de causalité sans preuve."
   },
-  
   {
     id: "xZg2iVMMKwI",
-    title: "Lien de cause à effet douteux(2/2)",
+    title: "Lien de cause à effet douteux (2/2)",
     channelLabel: "L'Esprit critique",
     theme: "Sophismes & arguments fallacieux",
-    tags: ["Lien de cause à effet douteux"],
+    tags: ["lien de cause à effet douteux"],
     summary: "Déduire un lien de causalité sans preuve."
   },
-  
-   {
+
+  {
     id: "McW8Zs5Y_hs",
     title: "Le populisme",
     channelLabel: "Inspire-moi si tu peux",
@@ -484,16 +562,14 @@ const videos = [
     tags: ["populisme"],
     summary: "Simplifier les problèmes en opposant “le peuple” aux “élites”."
   },
-  
-   {
+  {
     id: "l2W4rHPJUKk",
     title: "Le populisme économique",
     channelLabel: "Inspire-moi si tu peux",
     theme: "Manipulations politiques & médiatiques",
-    tags: ["populisme"],
+    tags: ["populisme économique"],
     summary: "Promettre des solutions économiques faciles et irréalistes."
   },
-  
   {
     id: "YQ25GRAOvNY",
     title: "L'électoralisme",
@@ -502,16 +578,14 @@ const videos = [
     tags: ["électoralisme"],
     summary: "Prendre des positions uniquement pour gagner des voix."
   },
-  
-   {
+  {
     id: "Yx-roniiJcM",
     title: "La fenêtre d’Overton",
     channelLabel: "Inspire-moi si tu peux",
     theme: "Manipulations politiques & médiatiques",
     tags: ["fenêtre d’Overton"],
-    summary: "L’espace des idées qu’une société juge acceptables, manipulable par le discours."
+    summary: "L’espace des idées jugées acceptables, déplaçable par le discours."
   },
-  
   {
     id: "wnPXLMn8p8I",
     title: "Le mensonge collectif",
@@ -520,7 +594,6 @@ const videos = [
     tags: ["mensonge collectif"],
     summary: "Une idée fausse acceptée par la majorité parce qu’elle rassure."
   },
-  
   {
     id: "PB-Md6pVj24",
     title: "L'opinion et les médias",
@@ -529,7 +602,6 @@ const videos = [
     tags: ["opinion et médias"],
     summary: "Les médias peuvent orienter, amplifier ou taire certaines opinions."
   },
-  
   {
     id: "s3b1X0eY2jk",
     title: "L'influence médiatique",
@@ -538,17 +610,15 @@ const videos = [
     tags: ["influence médiatique"],
     summary: "Capacité des médias à cadrer les perceptions d’un événement."
   },
-  
   {
     id: "Cv1eCv2p1GQ",
-    title: "Les structures médiatique",
+    title: "Les structures médiatiques",
     channelLabel: "L'Esprit critique",
     theme: "Manipulations politiques & médiatiques",
-    tags: ["structures médiatique"],
+    tags: ["structures médiatiques"],
     summary: "Organisation et dépendances qui influencent la production de l’information."
   },
-  
-   {
+  {
     id: "JzhdY6SCyA0",
     title: "L'indépendance journalistique",
     channelLabel: "Inspire-moi si tu peux",
@@ -556,8 +626,7 @@ const videos = [
     tags: ["indépendance journalistique"],
     summary: "Liberté d’un média d’informer sans pression économique ou politique."
   },
-  
-   {
+  {
     id: "C9fpeXCrw8k",
     title: "La déontologie journalistique",
     channelLabel: "Inspire-moi si tu peux",
@@ -565,7 +634,6 @@ const videos = [
     tags: ["déontologie journalistique"],
     summary: "Règles professionnelles qui garantissent une information honnête."
   },
-  
   {
     id: "kHz081JF290",
     title: "L'idéologie (1/2)",
@@ -574,7 +642,6 @@ const videos = [
     tags: ["idéologie"],
     summary: "Ensemble d’idées qui filtre la perception du réel."
   },
-  
   {
     id: "ZTFtM8_bShw",
     title: "L'idéologie (2/2)",
@@ -583,7 +650,6 @@ const videos = [
     tags: ["idéologie"],
     summary: "Ensemble d’idées qui filtre la perception du réel."
   },
-  
   {
     id: "Km1VcWBq4sA",
     title: "L'idéologisme",
@@ -592,8 +658,7 @@ const videos = [
     tags: ["idéologisme"],
     summary: "Lire tout exclusivement à travers une grille idéologique."
   },
-  
-   {
+  {
     id: "7og_VDNJnaA",
     title: "La polarisation manipulatoire",
     channelLabel: "Inspire-moi si tu peux",
@@ -601,8 +666,7 @@ const videos = [
     tags: ["polarisation manipulatoire"],
     summary: "Transformer des désaccords en camps irréconciliables."
   },
-  
-   {
+  {
     id: "40MRNekQvaA",
     title: "Le retournement de veste",
     channelLabel: "Inspire-moi si tu peux",
@@ -610,8 +674,7 @@ const videos = [
     tags: ["retournement de veste"],
     summary: "Changer d’avis par opportunisme ou intérêt politique."
   },
-  
-   {
+  {
     id: "xkbhckQoUN4",
     title: "Je suis Charlie",
     channelLabel: "Inspire-moi si tu peux",
@@ -619,7 +682,6 @@ const videos = [
     tags: ["je suis Charlie"],
     summary: "Exemple de symbole médiatico-politique mobilisé dans le débat public."
   },
-  
   {
     id: "yvx-RNJgphw",
     title: "L'état de droit",
@@ -628,8 +690,7 @@ const videos = [
     tags: ["état de droit"],
     summary: "Système où la loi prime sur les émotions ou les intérêts particuliers."
   },
-  
-   {
+  {
     id: "AFla8Rq8lwk",
     title: "Le fascisme",
     channelLabel: "L'Esprit critique",
@@ -637,7 +698,6 @@ const videos = [
     tags: ["fascisme"],
     summary: "Idéologie autoritaire fondée sur l’obsession identitaire et la force."
   },
-  
   {
     id: "CIawyJjT2qA",
     title: "Le web sleuthing",
@@ -646,7 +706,6 @@ const videos = [
     tags: ["web sleuthing"],
     summary: "Enquête “citoyenne” en ligne qui produit souvent des erreurs."
   },
-  
   {
     id: "2BmE6LuKxMc",
     title: "La pédagogie politique",
@@ -655,8 +714,7 @@ const videos = [
     tags: ["pédagogie politique"],
     summary: "Manière dont on “explique” le monde pour influencer."
   },
-  
-   {
+  {
     id: "5SjOJEf-gsY",
     title: "La sidération",
     channelLabel: "L'Esprit critique",
@@ -664,7 +722,7 @@ const videos = [
     tags: ["sidération"],
     summary: "Paralyser l’analyse grâce à un choc émotionnel."
   },
-  
+
   {
     id: "FLjL_qU5Of4",
     title: "Le foutage de gueule",
@@ -673,8 +731,7 @@ const videos = [
     tags: ["foutage de gueule"],
     summary: "Attitude qui exprime le mépris ou l’insincérité."
   },
-  
-   {
+  {
     id: "pJiY_8LKAuU",
     title: "Le biais de prestige",
     channelLabel: "Inspire-moi si tu peux",
@@ -682,7 +739,6 @@ const videos = [
     tags: ["biais de prestige"],
     summary: "On valorise ce qui “fait important”, même sans justification."
   },
-  
   {
     id: "HKvtqFqnc5w",
     title: "Le syndrome du personnage principal",
@@ -691,7 +747,6 @@ const videos = [
     tags: ["syndrome du personnage principal"],
     summary: "Se prendre pour le centre de tout."
   },
-  
   {
     id: "yiDhSsTlPbw",
     title: "Le pathos (1/2)",
@@ -700,7 +755,6 @@ const videos = [
     tags: ["pathos"],
     summary: "Utilisation des émotions pour convaincre à la place des arguments."
   },
-  
   {
     id: "dHdLv1NH9e4",
     title: "Le pathos (2/2)",
@@ -709,7 +763,6 @@ const videos = [
     tags: ["pathos"],
     summary: "Utilisation des émotions pour convaincre à la place des arguments."
   },
-  
   {
     id: "Qtdxw3QkNxg",
     title: "Les émotions (1/2)",
@@ -718,7 +771,6 @@ const videos = [
     tags: ["émotions"],
     summary: "Facteurs qui influencent nos décisions plus que la raison."
   },
-  
   {
     id: "Txq84oi3yzw",
     title: "Les émotions (2/2)",
@@ -727,7 +779,6 @@ const videos = [
     tags: ["émotions"],
     summary: "Facteurs qui influencent nos décisions plus que la raison."
   },
-  
   {
     id: "OtUdgurTCo8",
     title: "La victimisation (1/2)",
@@ -735,8 +786,7 @@ const videos = [
     theme: "Psychologie, émotions & relations",
     tags: ["victimisation"],
     summary: "Se présenter comme victime pour éviter la critique."
-  }, 
-  
+  },
   {
     id: "SsTDMKdy9Oc",
     title: "La victimisation (2/2)",
@@ -744,18 +794,16 @@ const videos = [
     theme: "Psychologie, émotions & relations",
     tags: ["victimisation"],
     summary: "Se présenter comme victime pour éviter la critique."
-  }, 
-  
-   {
+  },
+  {
     id: "Tv_uKEfMZLI",
     title: "La honte",
     channelLabel: "Inspire-moi si tu peux",
     theme: "Psychologie, émotions & relations",
     tags: ["honte"],
-    summary: "Emotion qui pousse à cacher ou éviter le débat."
+    summary: "Émotion qui pousse à cacher ou éviter le débat."
   },
-  
-   {
+  {
     id: "oh51Btz-zxc",
     title: "Le respect",
     channelLabel: "Inspire-moi si tu peux",
@@ -763,88 +811,78 @@ const videos = [
     tags: ["respect"],
     summary: "Reconnaissance de la dignité de l’autre dans l’échange."
   },
-  
-   {
+  {
     id: "ZQpTO8l-Esk",
     title: "L'empathie (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["empathie"],
     summary: "Capacité à comprendre les émotions d’autrui."
-  },  
-  
-   {
+  },
+  {
     id: "_iPmWG_AQJI",
     title: "L'empathie (2/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["empathie"],
     summary: "Capacité à comprendre les émotions d’autrui."
-  },  
-  
-   {
+  },
+  {
     id: "CBG2iPk9qJo",
     title: "L'ironie (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["ironie"],
     summary: "Dire le contraire de ce que l’on pense pour choquer ou ridiculiser."
-  },  
-  
-   {
+  },
+  {
     id: "bwvlloTMRnI",
     title: "L'ironie (2/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["ironie"],
     summary: "Dire le contraire de ce que l’on pense pour choquer ou ridiculiser."
-  },  
-  
-   {
+  },
+  {
     id: "0jVGdbtxBVY",
     title: "Le mépris (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["mépris"],
     summary: "Dévalorisation de l’autre qui bloque tout dialogue."
-  },  
-  
-   {
+  },
+  {
     id: "PwJBvK6EjnA",
     title: "Le mépris (2/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["mépris"],
     summary: "Dévalorisation de l’autre qui bloque tout dialogue."
-  }, 
-  
-   {
+  },
+  {
     id: "hql1PiD-K2E",
-    title: "L'arguement ad hominem (1/2)",
+    title: "L'argument ad hominem (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
-    tags: ["arguement ad hominem"],
+    tags: ["argument ad hominem"],
     summary: "Critiquer la personne au lieu de l’argument."
-  },  
-  
+  },
   {
     id: "oVslliBRREc",
-    title: "L'arguement ad hominem (2/2)",
+    title: "L'argument ad hominem (2/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
-    tags: ["arguement ad hominem"],
+    tags: ["argument ad hominem"],
     summary: "Critiquer la personne au lieu de l’argument."
-  },  
-  
-    {
+  },
+  {
     id: "7MyDUpAqbbo",
     title: "Le déshonneur par association (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["déshonneur par association"],
     summary: "Rendre quelqu’un coupable par la simple proximité."
-  },  
-  
+  },
   {
     id: "hZSI2iQs_b4",
     title: "Le déshonneur par association (2/2)",
@@ -852,35 +890,31 @@ const videos = [
     theme: "Psychologie, émotions & relations",
     tags: ["déshonneur par association"],
     summary: "Rendre quelqu’un coupable par la simple proximité."
-  },  
-  
-   {
+  },
+  {
     id: "T6wIF6wMdHo",
     title: "Savoir se taire (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["savoir se taire"],
     summary: "Compétence relationnelle pour ne pas amplifier un conflit."
-  },  
-  
-   {
+  },
+  {
     id: "jagAhOtpnYU",
     title: "Savoir se taire (2/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["savoir se taire"],
     summary: "Compétence relationnelle pour ne pas amplifier un conflit."
-  }, 
-  
-   {
+  },
+  {
     id: "huXdvcdGoao",
     title: "La tolérance (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["tolérance"],
     summary: "Capacité à accepter la différence sans renoncer à la critique."
-  },  
-  
+  },
   {
     id: "P6iGJjtyQoU",
     title: "La tolérance (2/2)",
@@ -888,44 +922,39 @@ const videos = [
     theme: "Psychologie, émotions & relations",
     tags: ["tolérance"],
     summary: "Capacité à accepter la différence sans renoncer à la critique."
-  },  
-  
-    {
+  },
+  {
     id: "RponWz7RIUo",
     title: "“bah non on peut pas”",
     channelLabel: "Inspire-moi si tu peux",
     theme: "Psychologie, émotions & relations",
-    tags: ["“bah non on peut pas”"],
+    tags: ["bah non on peut pas"],
     summary: "Forme de fatalisme qui coupe court à l’échange."
   },
-  
-    {
+  {
     id: "BZeP2EOowHM",
     title: "L'opinion (1/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["opinion"],
     summary: "Position personnelle sans obligation de justification."
-  },  
-  
-   {
+  },
+  {
     id: "BflLjqRNu1I",
     title: "L'opinion (2/2)",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["opinion"],
     summary: "Position personnelle sans obligation de justification."
-  },  
-  
-   {
+  },
+  {
     id: "dHSF9mHvPeQ",
     title: "Les gens gentils",
     channelLabel: "L'Esprit critique",
     theme: "Psychologie, émotions & relations",
     tags: ["gens gentils"],
     summary: "Idéalisation naïve des intentions d’autrui."
-  }, 
-  
+  }
 ];
 
 const THEMES = [
@@ -936,16 +965,66 @@ const THEMES = [
   "Psychologie, émotions & relations"
 ];
 
+const THEME_CLASS = {
+  "Biais cognitifs & illusions mentales": "theme-biais",
+  "Sophismes & arguments fallacieux": "theme-sophismes",
+  "Manipulations politiques & médiatiques": "theme-manips",
+  "Psychologie, émotions & relations": "theme-psy"
+};
+
 let currentTheme = "Tous";
+let searchTerm = "";
+
 const filtersContainer = document.getElementById("filters");
 const grid = document.getElementById("video-grid");
+const searchInput = document.getElementById("searchInput");
+const clearBtn = document.getElementById("clearSearch");
+const resultsHint = document.getElementById("resultsHint");
 
+/* --- Utilitaires --- */
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function escapeRegExp(str){
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function highlight(text, term){
+  const safe = escapeHtml(text ?? "");
+  if(!term) return safe;
+  const re = new RegExp(escapeRegExp(term), "gi");
+  return safe.replace(re, match => `<mark class="hl">${match}</mark>`);
+}
+
+function matches(video, term){
+  if(!term) return true;
+  const hay = [
+    video.title || "",
+    video.summary || "",
+    (video.tags || []).join(" "),
+    video.channelLabel || "",
+    video.theme || ""
+  ].join(" ").toLowerCase();
+  return hay.includes(term.toLowerCase());
+}
+
+/* --- UI --- */
 function createFilters() {
+  filtersContainer.innerHTML = "";
   THEMES.forEach(theme => {
     const btn = document.createElement("button");
     btn.textContent = theme;
     if(theme === currentTheme) btn.classList.add("active");
-    btn.onclick = () => { currentTheme = theme; update(); };
+    btn.onclick = () => {
+      currentTheme = theme;
+      update();
+    };
     filtersContainer.appendChild(btn);
   });
 }
@@ -958,21 +1037,40 @@ function updateFilters() {
 
 function renderVideos() {
   grid.innerHTML = "";
-  const list = currentTheme === "Tous"
-    ? videos
-    : videos.filter(v => v.theme === currentTheme);
 
-  list.forEach(video => {
+  const filtered = videos.filter(v => {
+    const okTheme = (currentTheme === "Tous") || (v.theme === currentTheme);
+    const okSearch = matches(v, searchTerm);
+    return okTheme && okSearch;
+  });
+
+  resultsHint.textContent = searchTerm
+    ? `${filtered.length} résultat(s) pour “${searchTerm}”`
+    : `${filtered.length} vidéo(s) affichée(s)`;
+
+  if(filtered.length === 0){
+    const p = document.createElement("p");
+    p.className = "meta";
+    p.textContent = "Aucun résultat. Essaie un autre mot-clé ou change de catégorie.";
+    grid.appendChild(p);
+    return;
+  }
+
+  filtered.forEach(video => {
+    const themeClass = THEME_CLASS[video.theme] || "";
+
     const card = document.createElement("article");
-    card.className = "card";
+    card.className = `card ${themeClass}`;
 
     const link = document.createElement("a");
     link.href = `https://www.youtube.com/shorts/${video.id}`;
     link.target = "_blank";
+    link.rel = "noopener";
     link.className = "thumb-wrapper";
 
     const img = document.createElement("img");
     img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
+    img.alt = video.title;
     link.appendChild(img);
     card.appendChild(link);
 
@@ -980,16 +1078,28 @@ function renderVideos() {
     content.className = "card-content";
 
     const tag = document.createElement("div");
-    tag.className = "tag";
+    tag.className = `tag ${themeClass}`;
     tag.textContent = video.theme;
     content.appendChild(tag);
 
     const title = document.createElement("h3");
-    title.textContent = video.title;
+    title.innerHTML = highlight(video.title, searchTerm);
     content.appendChild(title);
 
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.innerHTML = highlight(`Chaîne : ${video.channelLabel}`, searchTerm);
+    content.appendChild(meta);
+
+    if(video.tags && video.tags.length){
+      const tagsLine = document.createElement("div");
+      tagsLine.className = "meta";
+      tagsLine.innerHTML = highlight(`Mots-clés : ${video.tags.join(", ")}`, searchTerm);
+      content.appendChild(tagsLine);
+    }
+
     const summary = document.createElement("p");
-    summary.textContent = video.summary;
+    summary.innerHTML = highlight(video.summary, searchTerm);
     content.appendChild(summary);
 
     card.appendChild(content);
@@ -1002,6 +1112,20 @@ function update() {
   renderVideos();
 }
 
+/* --- Events recherche --- */
+searchInput.addEventListener("input", () => {
+  searchTerm = searchInput.value.trim();
+  renderVideos();
+});
+
+clearBtn.addEventListener("click", () => {
+  searchTerm = "";
+  searchInput.value = "";
+  renderVideos();
+  searchInput.focus();
+});
+
+/* Init */
 createFilters();
 renderVideos();
 </script>
